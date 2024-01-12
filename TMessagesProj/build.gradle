@@ -73,11 +73,6 @@ android {
         }
     }
 
-    lintOptions {
-        disable 'MissingTranslation'
-        disable 'ExtraTranslation'
-        disable 'BlockedPrivateApi'
-    }
 
     dexOptions {
         jumboMode = true
@@ -90,12 +85,10 @@ android {
         coreLibraryDesugaringEnabled true
     }
 
-    defaultConfig.versionCode = Integer.parseInt(APP_VERSION_CODE)
 
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 33
-        versionName "8.9.0"
 
         vectorDrawables.generatedDensities = ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi']
 
@@ -104,14 +97,13 @@ android {
         externalNativeBuild {
             cmake {
                 version '3.10.2'
-                arguments '-DANDROID_STL=c++_static', '-DANDROID_PLATFORM=android-16', "-j=16"
+                arguments '-DANDROID_STL=c++_static', '-DANDROID_PLATFORM=android-16'
             }
         }
     }
 
     buildTypes {
         debug {
-            debuggable true
             jniDebuggable true
             minifyEnabled false
             shrinkResources false
@@ -126,7 +118,6 @@ android {
         }
 
         HA_private {
-            debuggable false
             jniDebuggable false
             minifyEnabled true
             multiDexEnabled true
@@ -140,7 +131,6 @@ android {
         }
 
         HA_public {
-            debuggable false
             jniDebuggable false
             minifyEnabled true
             multiDexEnabled true
@@ -154,7 +144,6 @@ android {
         }
 
         HA_hardcore {
-            debuggable false
             jniDebuggable false
             minifyEnabled true
             multiDexEnabled true
@@ -168,7 +157,6 @@ android {
         }
 
         standalone {
-            debuggable false
             jniDebuggable false
             minifyEnabled true
             multiDexEnabled true
@@ -182,7 +170,6 @@ android {
         }
 
         release {
-            debuggable false
             jniDebuggable false
             minifyEnabled true
             shrinkResources false
@@ -195,6 +182,10 @@ android {
             buildConfigField "boolean", "DEBUG_PRIVATE_VERSION", "false"
             buildConfigField "boolean", "BUILD_HOST_IS_WINDOWS", isWindows
         }
+    }
+    namespace 'org.telegram.messenger'
+    lint {
+        disable 'MissingTranslation', 'ExtraTranslation', 'BlockedPrivateApi'
     }
 }
 

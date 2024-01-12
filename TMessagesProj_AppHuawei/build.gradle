@@ -31,16 +31,12 @@ dependencies {
 android {
     compileSdkVersion 33
     buildToolsVersion '33.0.0'
+    ndkVersion "21.4.7075529"
 
     defaultConfig.applicationId = APP_PACKAGE
 
     sourceSets.main.jniLibs.srcDirs = ['../TMessagesProj/jni/']
 
-    lintOptions {
-        disable 'MissingTranslation'
-        disable 'ExtraTranslation'
-        disable 'BlockedPrivateApi'
-    }
 
     dexOptions {
         jumboMode = true
@@ -148,7 +144,7 @@ android {
         externalNativeBuild {
             cmake {
                 version '3.10.2'
-                arguments '-DANDROID_STL=c++_static', '-DANDROID_PLATFORM=android-16', "-j=16"
+                arguments '-DANDROID_STL=c++_static', '-DANDROID_PLATFORM=android-16'
             }
         }
     }
@@ -156,10 +152,12 @@ android {
     buildFeatures {
         buildConfig = true
     }
-
-    lintOptions {
+    namespace 'org.telegram.messenger.huawei'
+    lint {
         checkReleaseBuilds false
+        disable 'MissingTranslation', 'ExtraTranslation', 'BlockedPrivateApi'
     }
+
 }
 
 apply plugin: 'com.google.gms.google-services'
